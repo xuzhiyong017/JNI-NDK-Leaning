@@ -27,21 +27,7 @@ add_library( # Sets the name of the library.
 # completing its build.
 
 include_directories(${CMAKE_SOURCE_DIR}/common/)
-include_directories(${CMAKE_SOURCE_DIR}/SDL/include)
 
-add_library(SDL2 SHARED IMPORTED)
-set_target_properties(
-        SDL2
-        PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/../lib/${CMAKE_ANDROID_ARCH_ABI}/libSDL2.so
-)
-
-add_library(hidapi SHARED IMPORTED)
-set_target_properties(
-        hidapi
-        PROPERTIES IMPORTED_LOCATION
-        ${CMAKE_SOURCE_DIR}/../lib/${CMAKE_ANDROID_ARCH_ABI}/libhidapi.so
-)
 
 find_library( # Sets the name of the path variable.
               log-lib
@@ -61,8 +47,6 @@ target_link_libraries( # Specifies the target library.
         # included in the NDK.
 
         ${log-lib}
-        hidapi
-        SDL2
         GLESv1_CM
         GLESv2
 
