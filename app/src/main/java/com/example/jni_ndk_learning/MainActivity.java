@@ -13,9 +13,7 @@ import com.example.jni_ndk_learning.R;
 
 public class MainActivity extends AppCompatActivity {
 
-    static {
-        System.loadLibrary("native-lib");
-    }
+    TextView tv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,31 +21,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         // Example of a call to a native method
-        TextView tv = findViewById(R.id.sample_text);
-        tv.setText(stringFromJNI());
-
-
+        tv = findViewById(R.id.sample_text);
     }
 
     public void touchButton(View view) {
-
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                tv.setText("我的子线程"+Thread.currentThread().getName()+"");
+            }
+        }).start();
     }
 
 
-    class Student{
-        String name;
-        int age;
-
-        public Student(String name, int age) {
-            this.name = name;
-            this.age = age;
-        }
-    }
-
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     */
-    public native String stringFromJNI();
 
 }
