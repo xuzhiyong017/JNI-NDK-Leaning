@@ -2,7 +2,11 @@ package com.example.jni_ndk_learning;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
+import android.app.ActivityManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.example.jni_ndk_learning.R;
@@ -22,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
         TextView tv = findViewById(R.id.sample_text);
         tv.setText(stringFromJNI());
 
+
+    }
+
+    public void touchButton(View view) {
 
     }
 
