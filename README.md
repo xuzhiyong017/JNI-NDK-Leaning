@@ -2,71 +2,11 @@
 
 SDL学习, 主函数入口，当然可以更灵活的通过jni去调用
 ```
-int main(int argc, char *argv[])
-{
-    int flag = 1;
-
-    SDL_Window *window;                    // Declare a pointer
-    SDL_Renderer *renderer;
-
-    SDL_Init(SDL_INIT_VIDEO);              // Initialize SDL2
-
-    // Create an application window with the following settings:
-    window = SDL_CreateWindow(
-            "SDL2 Draw Window",                  // window title
-            SDL_WINDOWPOS_UNDEFINED,           // initial x position
-            SDL_WINDOWPOS_UNDEFINED,           // initial y position
-            640,                               // width, in pixels
-            480,                               // height, in pixels
-            SDL_WINDOW_SHOWN // flags - see below
-    );
-
-    // Check that the window was successfully created
-    if (window == NULL) {
-        // In the case that the window could not be made...
-        printf("Could not create window: %s\n", SDL_GetError());
-        return 1;
-    }
-
-    /* We must call SDL_CreateRenderer in order for draw calls to affect this window. */
-    renderer = SDL_CreateRenderer(window, -1, 0);
-
-    /* Select the color for drawing. It is set to red here. */
-    SDL_SetRenderDrawColor(renderer, 0, 255, 0, 255);
-
-    /* Clear the entire screen to our selected color. */
-    SDL_RenderClear(renderer);
-
-    SDL_SetRenderDrawColor(renderer, 255, 0, 0, SDL_ALPHA_OPAQUE);
-
-    SDL_RenderDrawLines(renderer, points, POINTS_COUNT);
-
-    SDL_Rect rect = { 200, 300, 100, 100 };
-    SDL_RenderDrawRect(renderer, &rect);
-
-    SDL_SetRenderDrawColor(renderer, 0, 255, 255, 255);
-    SDL_RenderFillRect(renderer, &rect);
-
-    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-    SDL_RenderFillRect(renderer, &bigrect);
-
-    /* Up until now everything was drawn behind the scenes.
-       This will show the new, red contents of the window. */
-    SDL_RenderPresent(renderer);
-
-    // The window is open: could enter program loop here (see SDL_PollEvent())
-    SDL_Delay(50000);  // Pause execution for 5000 milliseconds, for example
-
-    //destory renderer
-    if (renderer) {
-        SDL_DestroyRenderer(renderer);
-    }
-
-    // Close and destroy the window
-    SDL_DestroyWindow(window);
-
-    // Clean up
-    SDL_Quit();
-    return 0;
-}
+子线程普通情况下是不能更新UI的，只要是 ViewRootImpl 
+创建的线程就可以 touch view，然后 WindowManger.addView 
+的时候又会去创建 ViewRootImpl，所以我们只要在子线程调用 
+WindowManger.addView，这个时候添加的这个 View，
+就只能在这个子线程刷新了，这个子线程就是这个 View 的 UI 线程了,
+有些情况例外,比如说TextView这种控件，在内容没有达到引起布局变化的情况下，
+子线程是可以更新text内容的，当需要更新布局的时候就会一起UI线程检测
 ```
