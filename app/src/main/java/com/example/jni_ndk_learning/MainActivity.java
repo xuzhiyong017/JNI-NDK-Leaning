@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.jni_ndk_learning.R;
 
@@ -24,13 +25,17 @@ public class MainActivity extends AppCompatActivity {
 
         // Example of a call to a native method
         TextView tv = findViewById(R.id.sample_text);
-        tv.setText(stringFromJNI());
+        tv.setText(getFFmpegInfo());
 
 
     }
 
-    public void touchButton(View view) {
+    public native  String getFFmpegInfo();
 
+    public void touchButton(View view) {
+        for (int i = 0; i < 1; i++) {
+            Toast.makeText(this,"touchButton",Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -43,11 +48,5 @@ public class MainActivity extends AppCompatActivity {
             this.age = age;
         }
     }
-
-    /**
-     * A native method that is implemented by the 'native-lib' native library,
-     * which is packaged with this application.
-     */
-    public native String stringFromJNI();
 
 }
