@@ -14,8 +14,14 @@ set(thirdLib ${CMAKE_SOURCE_DIR}/thirdLib)
 
 link_directories(${thirdLib}/lib)
 
-include_directories(${thirdLib}/include)
+include_directories(thirdLib/include)
 include_directories(${CMAKE_SOURCE_DIR}/common/)
+
+
+file(GLOB src-files
+        native-lib.cpp
+        ${CMAKE_SOURCE_DIR}/src/decode/*.cpp
+       )
 
 add_library( # Sets the name of the library.
              native-lib
@@ -24,7 +30,7 @@ add_library( # Sets the name of the library.
              SHARED
 
              # Provides a relative path to your source file(s).
-             native-lib.cpp )
+             ${src-files} )
 
 
 # Searches for a specified prebuilt library and stores the path as a
