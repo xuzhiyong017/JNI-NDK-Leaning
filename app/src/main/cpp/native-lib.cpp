@@ -2,7 +2,6 @@
 #include <string>
 #include <stdlib.h>
 #include <stdio.h>
-#include <time.h>
 #include "common/logutil.h"
 
 extern "C" {

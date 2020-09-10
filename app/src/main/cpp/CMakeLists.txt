@@ -9,7 +9,10 @@ cmake_minimum_required(VERSION 3.4.1)
 # or SHARED, and provides the relative paths to its source code.
 # You can define multiple libraries, and CMake builds them for you.
 # Gradle automatically packages shared libraries with your APK.
-#
+
+# 支持C++11标准和GNU扩展特性
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+
 set(thirdLib ${CMAKE_SOURCE_DIR}/thirdLib)
 
 link_directories(${thirdLib}/lib)
@@ -21,6 +24,7 @@ include_directories(${CMAKE_SOURCE_DIR}/common/)
 file(GLOB src-files
         native-lib.cpp
         ${CMAKE_SOURCE_DIR}/src/decode/*.cpp
+        ${CMAKE_SOURCE_DIR}/src/utils/*.c
        )
 
 add_library( # Sets the name of the library.

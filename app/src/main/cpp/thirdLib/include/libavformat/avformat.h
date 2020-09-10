@@ -307,7 +307,6 @@
  * @}
  */
 
-#include <time.h>
 #include <stdio.h>  /* FILE */
 #include "libavcodec/avcodec.h"
 #include "libavutil/dict.h"

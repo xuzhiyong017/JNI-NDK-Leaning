@@ -2,15 +2,13 @@
 // Created by sky on 20-9-9.
 //
 
-#include <thread>
-#include <libavutil/time.h>
 #include "BaseDecoder.h"
-
 
 BaseDecoder::BaseDecoder(JNIEnv *env, jstring path) {
     mPathRef = env->NewGlobalRef(path);
     mPath = env->GetStringUTFChars(path,NULL);
     env->GetJavaVM(&mJavaVm);
+    StartDecodeThread();
 }
 
 BaseDecoder::~BaseDecoder() {
@@ -36,7 +34,7 @@ void BaseDecoder::Decode(std::shared_ptr<BaseDecoder> that) {
 
     that->InitFFmpegDecoder(env);
     that->AllocBuffer();
-    av_usleep(1000)
+    av_usleep(1000);
     that->Prepare(env);
     that->DecodeLoop();
     that->DecodeFinish(env);
@@ -53,7 +51,7 @@ void BaseDecoder::InitFFmpegDecoder(JNIEnv *env) {
         return;
     }
 
-    if(avformat_find_stream_info(avFormatContext.NULL) < 0){
+    if(avformat_find_stream_info(avFormatContext,NULL) < 0){
         LOGE(TAG,LogSpec(),"Fail to find stream info");
         DecodeFinish(env);
     }
@@ -102,5 +100,72 @@ void BaseDecoder::AllocBuffer() {
 }
 
 void BaseDecoder::DecodeLoop() {
+    if(mState == STOP){
+        mState = START;
+    }
+    LOGI(TAG,LogSpec(),"Decode Loop start");
+    while(true){
+        if(mState != DECODEING
+        && mState != START
+        && mState != STOP){
+            Wait();
+            mStartTime = getSystemTime();
+        }
+    }
+}
 
+void BaseDecoder::Wait(long second) {
+
+}
+
+void BaseDecoder::DecodeFinish(JNIEnv *env) {
+    LOGI(TAG,LogSpec(),"Decode finish");
+    if(avPacket){
+        av_packet_free(&avPacket);
+    }
+
+    if(avFrame){
+        av_frame_free(&avFrame);
+    }
+
+    if(avCodecContext){
+        avcodec_close(avCodecContext);
+        avcodec_free_context(&avCodecContext);
+    }
+
+    if(avFormatContext){
+        avformat_close_input(&avFormatContext);
+        avformat_free_context(avFormatContext);
+    }
+
+    if(mPathRef != NULL && mPath != NULL){
+        env->ReleaseStringUTFChars(static_cast<jstring>(mPathRef), mPath);
+        env->DeleteGlobalRef(mPathRef);
+    }
+
+    Release();
+}
+
+void BaseDecoder::start() {
+
+}
+
+void BaseDecoder::stop() {
+
+}
+
+void BaseDecoder::pause() {
+
+}
+
+bool BaseDecoder::IsRunning(){
+    return false;
+}
+
+long BaseDecoder::getDuration() {
+    return 0;
+}
+
+long BaseDecoder::getCurPos() {
+    return 0;
 }

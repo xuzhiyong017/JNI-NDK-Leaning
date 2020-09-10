@@ -10,7 +10,7 @@ public:
     virtual void start() = 0;
     virtual void pause() = 0;
     virtual void stop() = 0;
-    virtual bool isRunning() = 0;
+    virtual bool IsRunning() = 0;
     virtual long getDuration() = 0;
     virtual long getCurPos() = 0;
 };
