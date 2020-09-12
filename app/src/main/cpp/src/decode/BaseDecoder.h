@@ -13,22 +13,23 @@
 #include "IDecoder.h"
 #include "DecodeState.h"
 #include <logutil.h>
-#include "../utils/time.c"
 
 extern "C"{
 #include <libavcodec/avcodec.h>
 #include <libavformat/avformat.h>
 #include <libavutil/time.h>
+#include <libswresample/swresample.h>
+#include <libavutil/opt.h>
 };
 
 class BaseDecoder : public IDecoder{
 private:
     const char *TAG = "BaseDecoder";
-    AVFormatContext *avFormatContext;
-    AVCodecContext *avCodecContext;
-    AVCodec *avCodec;
-    AVPacket *avPacket;
-    AVFrame *avFrame;
+    AVFormatContext *avFormatContext = NULL;
+    AVCodecContext *avCodecContext  = NULL;
+    AVCodec *avCodec  = NULL;
+    AVPacket *avPacket  = NULL;
+    AVFrame *avFrame  = NULL;
     int64_t mCurTime = 0;
     long mDuration = 0;
     int64_t mStartTime = -1;
@@ -44,12 +45,14 @@ private:
     pthread_cond_t mCond = PTHREAD_COND_INITIALIZER;
 
     void Init(JNIEnv *env,char * path);
-    void InitFFmpegDecoder(JNIEnv * env);
+
+    int InitFFmpegDecoder(JNIEnv * env);
     void AllocBuffer();
     void StartDecodeThread();
     virtual void Prepare(JNIEnv *env) = 0;
     void DecodeLoop();
     void GetTimeStamp();
+    void ObtainTimeStamp();
     void DecodeFinish(JNIEnv * env);
     static void Decode(std::shared_ptr<BaseDecoder> that);
 
@@ -89,6 +92,9 @@ protected:
 
     virtual void Release() = 0;
 
+    AVFrame* DecodeFrame();
+
+    virtual void RenderFrame(AVFrame *frame) = 0;
     /**
     * 进入等待
     */
@@ -98,6 +104,11 @@ protected:
      * 恢复解码
      */
     void SendSignal();
+
+    AVCodecContext * GetAVCodecContext(){
+        return avCodecContext;
+    }
+
 };
 
 

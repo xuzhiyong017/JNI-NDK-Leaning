@@ -2,15 +2,10 @@ package com.example.jni_ndk_learning;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.app.ActivityManager;
-import android.graphics.Bitmap;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import com.example.jni_ndk_learning.R;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -33,9 +28,7 @@ public class MainActivity extends AppCompatActivity {
     public native  String getFFmpegInfo();
 
     public void touchButton(View view) {
-        for (int i = 0; i < 1; i++) {
-            Toast.makeText(this,"touchButton",Toast.LENGTH_SHORT).show();
-        }
+        startActivity(new Intent(this, MusicDecodeActivity.class));
     }
 
 

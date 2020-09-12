@@ -24,7 +24,14 @@ include_directories(${CMAKE_SOURCE_DIR}/common/)
 file(GLOB src-files
         native-lib.cpp
         ${CMAKE_SOURCE_DIR}/src/decode/*.cpp
+        ${CMAKE_SOURCE_DIR}/src/decode/*.h
         ${CMAKE_SOURCE_DIR}/src/utils/*.c
+
+        ${CMAKE_SOURCE_DIR}/src/media/*.h
+        ${CMAKE_SOURCE_DIR}/src/media/*.cpp
+
+        ${CMAKE_SOURCE_DIR}/src/render/*.h
+        ${CMAKE_SOURCE_DIR}/src/render/*.cpp
        )
 
 add_library( # Sets the name of the library.
