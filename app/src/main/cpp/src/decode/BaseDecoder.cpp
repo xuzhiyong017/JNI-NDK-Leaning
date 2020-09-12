@@ -13,12 +13,11 @@ BaseDecoder::BaseDecoder(JNIEnv *env, jstring path) {
 }
 
 BaseDecoder::~BaseDecoder() {
-    LOG_ERROR(TAG,"Release","BaseDecoder inner ~ start");
-    if(avFormatContext != NULL) delete avFormatContext;
-    if(avCodecContext != NULL) delete avCodecContext;
-    if(avFrame != NULL) delete avFrame;
-    if(avPacket != NULL) delete avPacket;
-    LOG_ERROR(TAG,"Release","BaseDecoder inner ~ end");
+    LOG_ERROR(TAG,"BaseDecoder","BaseDecoder ~BaseDecoder()");
+    if (avFormatContext != NULL) delete avFormatContext;
+    if (avCodecContext != NULL) delete avCodecContext;
+    if (avFrame != NULL) delete avFrame;
+    if (avPacket != NULL) delete avPacket;
 }
 
 void BaseDecoder::StartDecodeThread() {
@@ -231,7 +230,6 @@ void BaseDecoder::DecodeFinish(JNIEnv *env) {
         mPathRef = NULL;
         mPath = NULL;
     }
-
     Release();
 }
 
@@ -243,7 +241,6 @@ void BaseDecoder::start() {
 void BaseDecoder::stop() {
     mState = STOP;
     SendSignal();
-    LOG_ERROR(TAG,"Release","BaseDecoder stop");
 }
 
 void BaseDecoder::pause() {

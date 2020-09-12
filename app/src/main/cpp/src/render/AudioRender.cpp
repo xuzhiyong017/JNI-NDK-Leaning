@@ -13,7 +13,7 @@ AudioRender::AudioRender() {
 }
 
 AudioRender::~AudioRender() {
-
+    LOG_ERROR("AudioRender","Release","~AudioRender()");
 }
 
 bool AudioRender::createEngine() {

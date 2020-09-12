@@ -13,13 +13,7 @@ MusicDecoder::MusicDecoder(JNIEnv *env, jstring path) {
 }
 
 MusicDecoder::~MusicDecoder() {
-    if(audioDecoder){
-        LOG_ERROR("AudioDecder","Release","MusicDecoder holder Audio ~ start");
-        audioDecoder->stop();
-        LOG_ERROR("AudioDecder","Release","MusicDecoder holder Audio ~ end");
-        delete audioDecoder;
-        LOG_ERROR("AudioDecder","Release","MusicDecoder holder Audio ~ delete");
-    }
+    LOG_ERROR("MusicDecoder","Release","~MusicDecoder()");
 }
 
 void MusicDecoder::start() {
@@ -31,17 +25,5 @@ void MusicDecoder::pause() {
 }
 
 void MusicDecoder::stop() {
-    if(audioDecoder){
-        LOG_ERROR("AudioDecder","Release","MusicDecoder holder Audio stop start");
-        audioDecoder->stop();
-        LOG_ERROR("AudioDecder","Release","MusicDecoder holder Audio stop end");
-        delete audioDecoder;
-        audioDecoder = nullptr;
-        LOG_ERROR("AudioDecder","Release","MusicDecoder holder Audio stop delete");
-    }
-
-    if(audioRender){
-        delete audioRender;
-        audioRender = nullptr;
-    }
+    audioDecoder->stop();
 }

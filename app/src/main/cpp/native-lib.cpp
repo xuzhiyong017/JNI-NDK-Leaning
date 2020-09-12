@@ -74,12 +74,9 @@ extern "C" {
     JNIEXPORT void JNICALL
     Java_com_example_jni_1ndk_1learning_decode_NativeMusicDecoder_release(JNIEnv *env, jobject thiz) {
         if(musicDecoder){
-            LOG_ERROR(TAG,"Release","musicDecoder stop start");
             musicDecoder->stop();
-            LOG_ERROR(TAG,"Release","musicDecoder stop end");
             delete musicDecoder;
             musicDecoder = nullptr;
-            LOG_ERROR(TAG,"Release","musicDecoder stop delete");
         }
     }
 };

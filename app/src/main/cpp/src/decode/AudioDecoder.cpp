@@ -11,12 +11,10 @@ AudioDecoder::AudioDecoder(JNIEnv *env, const jstring path):BaseDecoder(env,path
 }
 
 AudioDecoder::~AudioDecoder(){
-    LOG_ERROR(TAG_,"Release","AudioDecoder inner ~ start");
-    BaseDecoder::~BaseDecoder();
+    LOG_ERROR(TAG_,"Release","AudioDecoder::~AudioDecoder()");
     if(iRender != NULL){
-        iRender->Release();
+        delete iRender;
     }
-    LOG_ERROR(TAG_,"Release","AudioDecoder inner ~ end");
 }
 
 void AudioDecoder::SetRender(IRender *render) {

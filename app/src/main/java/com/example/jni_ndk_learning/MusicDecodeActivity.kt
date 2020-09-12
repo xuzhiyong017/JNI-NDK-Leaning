@@ -29,5 +29,6 @@ class MusicDecodeActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        musicDecoder.release()
     }
 }
