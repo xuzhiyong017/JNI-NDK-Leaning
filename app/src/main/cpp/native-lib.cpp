@@ -81,3 +81,11 @@ extern "C" {
     }
 };
 
+extern "C"
+JNIEXPORT void JNICALL
+Java_com_example_jni_1ndk_1learning_decode_NativeMusicDecoder_setVolume(JNIEnv *env, jobject thiz,
+                                                                        jint progress) {
+    if(musicDecoder){
+        musicDecoder->setVolume(progress);
+    }
+}

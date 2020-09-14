@@ -17,6 +17,8 @@ public:
     void pause();
     void stop();
 
+    void setVolume(int i);
+
 private:
     AudioDecoder *audioDecoder = nullptr;
     AudioRender *audioRender = nullptr;

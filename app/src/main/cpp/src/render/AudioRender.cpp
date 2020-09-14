@@ -211,3 +211,50 @@ void AudioRender::Render(uint8_t *pcm, int size) {
         free(pcm);
     }
 }
+
+void AudioRender::setVolume(int percent) {
+    if(mSlVolumeItf != NULL)
+    {
+        int result = (100 - percent) * -20 ;
+        if(percent > 30)
+        {
+            result = (100 - percent) * -20;
+        }
+        else if(percent > 25)
+        {
+            result = (100 - percent) * -22;
+        }
+        else if(percent > 20)
+        {
+            result = (100 - percent) * -25;
+        }
+        else if(percent > 15)
+        {
+            result = (100 - percent) * -28;
+        }
+        else if(percent > 10)
+        {
+            result = (100 - percent) * -30;
+        }
+        else if(percent > 5)
+        {
+            result = (100 - percent) * -34;
+        }
+        else if(percent > 3)
+        {
+            result = (100 - percent) * -37;
+        }
+        else if(percent > 0)
+        {
+            result = (100 - percent) * -40;
+        }
+        else{
+            result = (100 - percent) * -100;
+        }
+
+        (*mSlVolumeItf)->SetVolumeLevel(mSlVolumeItf,result);
+    }
+
+
+
+}

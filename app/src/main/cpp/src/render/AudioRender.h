@@ -85,6 +85,8 @@ public:
     void InitRender() override ;
     void Release() override ;
     void Render(uint8_t *pcm, int size) override;
+
+    void setVolume(int i);
 };
 
 

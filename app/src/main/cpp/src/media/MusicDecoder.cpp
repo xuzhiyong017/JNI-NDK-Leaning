@@ -27,3 +27,9 @@ void MusicDecoder::pause() {
 void MusicDecoder::stop() {
     audioDecoder->stop();
 }
+
+void MusicDecoder::setVolume(int volume) {
+    if(audioRender){
+        audioRender->setVolume(volume);
+    }
+}

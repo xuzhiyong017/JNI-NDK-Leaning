@@ -12,4 +12,5 @@ class NativeMusicDecoder {
     external fun start()
     external fun pause()
     external fun release()
+    external fun setVolume(progress: Int);
 }
