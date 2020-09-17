@@ -12,9 +12,8 @@
 class IVideoRender {
 public:
     virtual void initRender(JNIEnv * env,int videoWidth,int videoHeight,int *dstSize) = 0;
-    virtual void Render(RenderVideoFrame *frame);
-    virtual void ReleaseRender();
-    virtual ~IVideoRender();
+    virtual void Render(RenderVideoFrame *frame) = 0;
+    virtual void ReleaseRender() = 0;
 };
 
 

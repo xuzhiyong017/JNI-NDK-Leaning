@@ -13,10 +13,13 @@ class VideoDecoder : public BaseDecoder {
 private:
     int totalCountFrame = 0;
     IVideoRender *iRender = NULL;
-    SwrContext *mSwrContext = NULL;
+    SwsContext * mSwsContext = NULL;
     //视频数据目标格式
     int showWidth;
     int showHeight;
+    //存放YUV转换为RGB后的数据
+    AVFrame *mAvFrame = NULL;
+    uint8_t *m_buf_for_rgb_frame = NULL;
     const AVPixelFormat DST_FORMAT = AV_PIX_FMT_RGBA;
 
     void initRender(JNIEnv *env);

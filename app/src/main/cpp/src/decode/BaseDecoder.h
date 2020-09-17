@@ -20,6 +20,8 @@ extern "C"{
 #include <libavutil/time.h>
 #include <libswresample/swresample.h>
 #include <libavutil/opt.h>
+#include <libavutil/imgutils.h>
+#include <libswscale/swscale.h>
 };
 
 class BaseDecoder : public IDecoder{
@@ -107,6 +109,21 @@ protected:
 
     AVCodecContext * GetAVCodecContext(){
         return avCodecContext;
+    }
+
+    /**
+    * 视频数据编码格式
+    * @return
+    */
+    AVPixelFormat video_pixel_format() {
+        return avCodecContext->pix_fmt;
+    }
+
+    /**
+     * 获取解码时间基
+     */
+    AVRational time_base() {
+        return avFormatContext->streams[mStreamIndex]->time_base;
     }
 
 };

@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include "common/logutil.h"
 #include "src/media/MusicDecoder.h"
+#include "src/media/NativePlayer.h"
 
 extern "C" {
     #include <libavcodec/version.h>
@@ -79,13 +80,43 @@ extern "C" {
             musicDecoder = nullptr;
         }
     }
+
+    JNIEXPORT void JNICALL
+    Java_com_example_jni_1ndk_1learning_decode_NativeMusicDecoder_setVolume(JNIEnv *env, jobject thiz,
+                                                                            jint progress) {
+        if(musicDecoder){
+            musicDecoder->setVolume(progress);
+        }
+    }
+
+
+    NativePlayer * nativePlayer = nullptr;
+    JNIEXPORT void JNICALL
+    Java_com_example_jni_1ndk_1learning_decode_NativePlayer_createPlayer(JNIEnv *env, jobject thiz,
+                                                                         jstring path,
+                                                                         jobject surface) {
+        nativePlayer = new NativePlayer(env,path,surface);
+    }
+
+    JNIEXPORT void JNICALL
+    Java_com_example_jni_1ndk_1learning_decode_NativePlayer_start(JNIEnv *env, jobject thiz) {
+        if(nativePlayer){
+            nativePlayer->start();
+        }
+    }
+
+    JNIEXPORT void JNICALL
+    Java_com_example_jni_1ndk_1learning_decode_NativePlayer_pause(JNIEnv *env, jobject thiz) {
+        if(nativePlayer){
+            nativePlayer->pause();
+        }
+    }
+
+    JNIEXPORT void JNICALL
+    Java_com_example_jni_1ndk_1learning_decode_NativePlayer_release(JNIEnv *env, jobject thiz) {
+        if(nativePlayer){
+            nativePlayer->release();
+        }
+    }
 };
 
-extern "C"
-JNIEXPORT void JNICALL
-Java_com_example_jni_1ndk_1learning_decode_NativeMusicDecoder_setVolume(JNIEnv *env, jobject thiz,
-                                                                        jint progress) {
-    if(musicDecoder){
-        musicDecoder->setVolume(progress);
-    }
-}
