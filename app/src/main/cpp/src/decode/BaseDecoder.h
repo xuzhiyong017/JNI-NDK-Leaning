@@ -53,7 +53,7 @@ private:
     void StartDecodeThread();
     virtual void Prepare(JNIEnv *env) = 0;
     void DecodeLoop();
-    void GetTimeStamp();
+    void SyncRender();
     void ObtainTimeStamp();
     void DecodeFinish(JNIEnv * env);
     static void Decode(std::shared_ptr<BaseDecoder> that);

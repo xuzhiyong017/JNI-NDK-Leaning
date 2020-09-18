@@ -111,14 +111,14 @@ void AudioRender::BlockQueue() {
         }
     }
 
-    LOGD(TAG,"BlockEnqueue thread %d enter",std::this_thread::get_id());
+//    LOGD(TAG,"BlockEnqueue thread %d enter",std::this_thread::get_id());
 
     while (mQueue.empty() && mPlayer != NULL){
-        LOGD(TAG,"BlockEnqueue thread %d wait",std::this_thread::get_id());
+//        LOGD(TAG,"BlockEnqueue thread %d wait",std::this_thread::get_id());
         WaitForCache();
     }
 
-    LOGD(TAG,"BlockEnqueue thread %d front",std::this_thread::get_id());
+//    LOGD(TAG,"BlockEnqueue thread %d front",std::this_thread::get_id());
 
     AudioPacket * audioPacket = mQueue.front();
     if(NULL != audioPacket && mPlayer){
@@ -198,7 +198,7 @@ void AudioRender::Render(uint8_t *pcm, int size) {
                 NotifyCacheReadySignal();
                 usleep(20000);
             }
-            LOG_INFO(TAG,"","Render thread %d",std::this_thread::get_id());
+//            LOG_INFO(TAG,"","Render thread %d",std::this_thread::get_id());
             uint8_t *data = (uint8_t *) malloc(size);
             memcpy(data,pcm,size);
             AudioPacket *packet = new AudioPacket(data,size);

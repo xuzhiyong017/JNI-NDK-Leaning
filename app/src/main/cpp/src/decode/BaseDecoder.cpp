@@ -129,7 +129,7 @@ void BaseDecoder::DecodeLoop() {
         }
 
         if(DecodeFrame() != NULL){
-
+            RenderFrame(avFrame);
             if(mState == START){
                 mState = PAUSE;
             }
@@ -168,11 +168,11 @@ AVFrame * BaseDecoder::DecodeFrame() {
             int frameCount = 0;
             while (avcodec_receive_frame(avCodecContext,avFrame) == 0){
                 ObtainTimeStamp();
+                SyncRender();
                 RenderFrame(avFrame);
                 frameCount++;
             }
             LOG_INFO(TAG,LogSpec(),"Decoder onePacket frameCount: %d",frameCount);
-            return avFrame;
         }
 
         av_packet_unref(avPacket);
@@ -181,6 +181,14 @@ AVFrame * BaseDecoder::DecodeFrame() {
     av_packet_unref(avPacket);
     LOG_INFO(TAG,LogSpec(),"ret = %d",ret);
     return NULL;
+}
+
+void BaseDecoder::SyncRender() {
+    int64_t ct = getSystemTime();
+    int64_t passTime = ct - mStartTime;
+    if (mCurTime > passTime) {
+        av_usleep((unsigned int)((mCurTime - passTime) * 1000));
+    }
 }
 
 void BaseDecoder::Wait(long second) {

@@ -24,6 +24,8 @@ void VideoRender::initRender(JNIEnv *env, int videoWidth, int videoHeight, int *
     if(dstH > windowHeight){
         dstH = windowHeight;
         dstW = windowHeight * videoWidth / videoHeight;
+    }else{
+        offset = (windowHeight - dstH) / 2 ;
     }
 
     ANativeWindow_setBuffersGeometry(mWindow,windowWidth,windowHeight,WINDOW_FORMAT_RGBA_8888);
@@ -39,7 +41,7 @@ void VideoRender::Render(RenderVideoFrame *frame) {
     int srcStride = frame->line_size;
 
     for (int i = 0; i < dstH; ++i) {
-        memcpy(dst+i*dstStride,frame->data + i*srcStride,srcStride);
+        memcpy(dst+(offset+i)*dstStride,frame->data + i*srcStride,srcStride);
     }
     ANativeWindow_unlockAndPost(mWindow);
 }

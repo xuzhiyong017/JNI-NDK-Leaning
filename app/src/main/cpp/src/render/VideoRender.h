@@ -25,6 +25,7 @@ private:
 
     int dstW;
     int dstH;
+    int offset;//居中的偏移量
 public:
     VideoRender(JNIEnv *env,jobject suface);
     ~VideoRender();
