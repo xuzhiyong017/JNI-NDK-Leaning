@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public native  String getFFmpegInfo();
+    public native String executeFFmpeg(String cmds);
 
     public void touchButton(View view) {
 //        startActivity(new Intent(this, MusicDecodeActivity.class));

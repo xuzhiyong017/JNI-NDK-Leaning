@@ -25,6 +25,12 @@ extern "C" {
     }
 
     JNIEXPORT jstring JNICALL
+    Java_com_example_jni_1ndk_1learning_MainActivity_executeFFmpeg(JNIEnv *env, jobject thiz,
+                                                                   jstring cmds) {
+
+    }
+
+    JNIEXPORT jstring JNICALL
     Java_com_example_jni_1ndk_1learning_MainActivity_getFFmpegInfo(JNIEnv *env, jobject thiz) {
         char strBuffer[1024 * 4] = {0};
         strcat(strBuffer, "libavcodec : ");
