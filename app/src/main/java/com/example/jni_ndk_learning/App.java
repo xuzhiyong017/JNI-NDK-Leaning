@@ -10,8 +10,14 @@ import android.app.Application;
  */
 public class App extends Application {
 
+    static {
+//        System.loadLibrary("native-lib");
+//        System.loadLibrary("test-lib");
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
+
     }
 }
